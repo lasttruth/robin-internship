@@ -6,12 +6,12 @@ const Explore = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
+  //no one can know about this
   return (
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
         <div id="top"></div>
-
+        
         <section
           id="subheader"
           className="text-light"
