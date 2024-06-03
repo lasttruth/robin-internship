@@ -57,7 +57,7 @@ const NewItems = () => {
                   items: 3,
                 },
                 1400: {
-                  items: 4,
+                  items: 4, 
                 },
               }}
             >
