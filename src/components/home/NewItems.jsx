@@ -91,7 +91,7 @@ const NewItems = () => {
               }}
             >
              {[...Array(4)].map((_, index) => (
-                  <div key={index}>
+                  <div key={index}> 
                       <div className="author_list_pp">
                         <Skeleton
                           width="60px"
