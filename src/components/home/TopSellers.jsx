@@ -16,7 +16,7 @@ const TopSellers = () => {
       setLoading(false);
     } catch (error) {
       console.error("Error fetching new items:", error);
-      setLoading(false);
+      setLoading(true);
     }
   }
 
