@@ -5,7 +5,7 @@ import Skeleton from "../UI/Skeleton";
 
 const TopSellers = () => {
   const [sellers, setSellers] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   async function fetchTopSeller() {
     try {
@@ -13,10 +13,10 @@ const TopSellers = () => {
         "https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers"
       );
       setSellers(data);
-      setIsLoaded(true);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching new items:", error);
-      setIsLoaded(false);
+      setLoading(false);
     }
   }
 
@@ -36,7 +36,7 @@ const TopSellers = () => {
           </div>
           <div className="col-md-12">
             <ol className="author_list">
-              {isLoaded
+              {loading
                 ? new Array(12).fill(0).map((_, index) => (
                     <li key={index}>
                       <div className="author_list_pp">
@@ -66,7 +66,7 @@ const TopSellers = () => {
                       </div>
                       <div className="author_list_info">
                         <Link to="/author">{seller.authorName}</Link>
-                        <span>{seller.price} ETH</span>
+                        <span>{seller.price} ETH</span> 
                       </div>
                     </li>
                   ))}
