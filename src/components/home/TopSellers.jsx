@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import AuthorImage from "../../images/author_thumbnail.jpg";
 import axios from "axios";
 import Skeleton from "../UI/Skeleton";
 
 const TopSellers = () => {
   const [sellers, setSellers] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
 
   async function fetchTopSeller() {
     try {
@@ -17,7 +16,7 @@ const TopSellers = () => {
       setIsLoaded(true);
     } catch (error) {
       console.error("Error fetching new items:", error);
-      setIsLoaded(true);
+      setIsLoaded(false);
     }
   }
 
@@ -38,7 +37,22 @@ const TopSellers = () => {
           <div className="col-md-12">
             <ol className="author_list">
               {isLoaded
-                ? sellers.map((seller) => (
+                ? new Array(12).fill(0).map((_, index) => (
+                    <li key={index}>
+                      <div className="author_list_pp">
+                        <Link to="/author">
+                          <Skeleton width={50} height={50} borderRadius={30} />
+                        </Link>
+                      </div>
+                      <div className="author_list_info">
+                        <Skeleton width={100} height={10} borderRadius={0} />
+                        <span>
+                          <Skeleton width={50} height={10} borderRadius={0} />
+                        </span>
+                      </div>
+                    </li>
+                  ))
+                : sellers.map((seller) => (
                     <li key={seller.id}>
                       <div className="author_list_pp">
                         <Link to="/author">
@@ -53,21 +67,6 @@ const TopSellers = () => {
                       <div className="author_list_info">
                         <Link to="/author">{seller.authorName}</Link>
                         <span>{seller.price} ETH</span>
-                      </div>
-                    </li>
-                  ))
-                : new Array(12).fill(0).map((_, index) => (
-                    <li key={index}>
-                      <div className="author_list_pp">
-                        <Link to="/author">
-                          <Skeleton width={50} height={50} borderRadius={30} />
-                        </Link>
-                      </div>
-                      <div className="author_list_info">
-                        <Skeleton width={100} height={10} borderRadius={0} />
-                        <span>
-                          <Skeleton width={50} height={10} borderRadius={0} />
-                        </span>
                       </div>
                     </li>
                   ))}
