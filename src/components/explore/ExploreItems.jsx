@@ -4,19 +4,24 @@ import Timer from "../UI/Timer";
 import Skeleton from "../UI/Skeleton";
 import axios from "axios";
 
-const ExploreItems = ( ) => {
+const ExploreItems = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [newItems, setNewItems] = useState([]);
   const [visibleItems, setVisibleIems] = useState(8);
   const [selectedFilter, setSelectedFilter] = useState("");
 
   async function fetchNewItems() {
-    const filterQuery = selectedFilter ? `?filter=${selectedFilter}` : "";
-    const { data } = await axios.get(
-      `https://us-central1-nft-cloud-functions.cloudfunctions.net/explore${filterQuery}`
-    );
-    setNewItems(data);
-    setIsLoading(false);
+    try {
+      const filterQuery = selectedFilter ? `?filter=${selectedFilter}` : "";
+      const { data } = await axios.get(
+        `https://us-central1-nft-cloud-functions.cloudfunctions.net/explore${filterQuery}`
+      );
+      setNewItems(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching new items: ", error);
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
