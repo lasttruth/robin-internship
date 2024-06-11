@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import AuthorImage from "../../images/author_thumbnail.jpg";
-import nftImage from "../../images/nftImage.jpg";
 import Timer from "../UI/Timer";
 import Skeleton from "../UI/Skeleton";
 import axios from "axios";
@@ -9,6 +7,7 @@ import axios from "axios";
 const ExploreItems = ({ exploreItems }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [newItems, setNewItems] = useState([]);
+  const [visibleItems, setVisibleIems] = useState(8);
 
   async function fetchNewItems() {
     const { data } = await axios.get(
@@ -21,6 +20,10 @@ const ExploreItems = ({ exploreItems }) => {
   useEffect(() => {
     fetchNewItems();
   }, []);
+
+  const loadMore = () => {
+    setVisibleIems(visibleItems + 4);
+  };
 
   return (
     <>
@@ -71,7 +74,7 @@ const ExploreItems = ({ exploreItems }) => {
               </div>
             </div>
           ))
-        : exploreItems.map((item, index) => (
+        : exploreItems.slice(0, visibleItems).map((item, index) => (
             <div
               key={index}
               className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
@@ -136,9 +139,11 @@ const ExploreItems = ({ exploreItems }) => {
             </div>
           ))}
       <div className="col-md-12 text-center">
-        <Link to="" id="loadmore" className="btn-main lead">
-          Load more
-        </Link>
+        {exploreItems.length > visibleItems && (
+          <button onClick={loadMore} className="btn-main lead">
+            Load more
+          </button>
+        )}
       </div>
     </>
   );
