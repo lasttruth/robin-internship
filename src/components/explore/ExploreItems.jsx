@@ -4,14 +4,16 @@ import Timer from "../UI/Timer";
 import Skeleton from "../UI/Skeleton";
 import axios from "axios";
 
-const ExploreItems = ({ exploreItems }) => {
+const ExploreItems = ( ) => {
   const [isLoading, setIsLoading] = useState(true);
   const [newItems, setNewItems] = useState([]);
   const [visibleItems, setVisibleIems] = useState(8);
+  const [selectedFilter, setSelectedFilter] = useState("");
 
   async function fetchNewItems() {
+    const filterQuery = selectedFilter ? `?filter=${selectedFilter}` : "";
     const { data } = await axios.get(
-      "https://us-central1-nft-cloud-functions.cloudfunctions.net/explore"
+      `https://us-central1-nft-cloud-functions.cloudfunctions.net/explore${filterQuery}`
     );
     setNewItems(data);
     setIsLoading(false);
@@ -19,7 +21,7 @@ const ExploreItems = ({ exploreItems }) => {
 
   useEffect(() => {
     fetchNewItems();
-  }, []);
+  }, [selectedFilter]);
 
   const loadMore = () => {
     setVisibleIems(visibleItems + 4);
@@ -28,7 +30,11 @@ const ExploreItems = ({ exploreItems }) => {
   return (
     <>
       <div>
-        <select id="filter-items" defaultValue="">
+        <select
+          id="filter-items"
+          defaultValue=""
+          onChange={(e) => setSelectedFilter(e.target.value)}
+        >
           <option value="">Default</option>
           <option value="price_low_to_high">Price, Low to High</option>
           <option value="price_high_to_low">Price, High to Low</option>
@@ -74,7 +80,7 @@ const ExploreItems = ({ exploreItems }) => {
               </div>
             </div>
           ))
-        : exploreItems.slice(0, visibleItems).map((item, index) => (
+        : newItems.slice(0, visibleItems).map((item, index) => (
             <div
               key={index}
               className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
@@ -139,7 +145,7 @@ const ExploreItems = ({ exploreItems }) => {
             </div>
           ))}
       <div className="col-md-12 text-center">
-        {exploreItems.length > visibleItems && (
+        {newItems.length > visibleItems && (
           <button onClick={loadMore} className="btn-main lead">
             Load more
           </button>

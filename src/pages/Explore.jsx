@@ -4,16 +4,8 @@ import ExploreItems from "../components/explore/ExploreItems";
 import axios from "axios";
 
 const Explore = () => {
-  const [exploreItems, setExploreItems] = useState([]);
-
-  async function fetchExploreItems() {
-    const { data } = await axios.get(
-      "https://us-central1-nft-cloud-functions.cloudfunctions.net/explore"
-    );
-    setExploreItems(data);
-  }
+  
   useEffect(() => {
-    fetchExploreItems();
     window.scrollTo(0, 0);
   }, []);
   //no one can know about this
@@ -43,7 +35,7 @@ const Explore = () => {
           <div className="container">
             <div className="row">
               
-                <ExploreItems exploreItems={exploreItems}/>
+                <ExploreItems/>
               
             </div>
           </div>
