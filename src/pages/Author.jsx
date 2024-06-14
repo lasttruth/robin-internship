@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
 import { Link, useParams } from "react-router-dom";
-import AuthorImage from "../images/author_thumbnail.jpg";
 import axios from "axios";
 import Skeleton from "../components/UI/Skeleton";
 
@@ -10,6 +9,7 @@ const Author = () => {
   const { authorId } = useParams();
   const [authorInfo, setAuthorInfo] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFollowing, setIsFollowing] = useState(true);
 
   async function fetchAuthor() {
     try {
@@ -24,6 +24,22 @@ const Author = () => {
       setIsLoading(false);
     }
   }
+
+  const followToggle = () => {
+    setIsFollowing((prevFollowing) => {
+      const newFollowingState = !prevFollowing;
+      const newfollowerCount = newFollowingState
+        ? authorInfo.followers - 1
+        : authorInfo.followers + 1;
+
+      setAuthorInfo((prevAuthor) => ({
+        ...prevAuthor,
+        followers: newfollowerCount,
+      }));
+
+      return newFollowingState;
+    });
+  };
 
   useEffect(() => {
     fetchAuthor();
@@ -179,8 +195,12 @@ const Author = () => {
                         <div className="profile_follower">
                           {authorInfo.followers}
                         </div>
-                        <Link to="#" className="btn-main">
-                          Follow
+                        <Link
+                          to="#"
+                          className="btn-main"
+                          onClick={followToggle}
+                        >
+                          {isFollowing ? "Follow" : "Unfollow"}
                         </Link>
                       </div>
                     </div>

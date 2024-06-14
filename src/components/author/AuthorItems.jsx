@@ -1,18 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import AuthorImage from "../../images/author_thumbnail.jpg";
-import nftImage from "../../images/nftImage.jpg";
 
-const AuthorItems = ({authorInfo, setAuthorInfo}) => {
+const AuthorItems = ({ authorInfo, setAuthorInfo }) => {
+  function likeToggle(index) {
+    const updatedNftCollection = authorInfo.nftCollection.map((item, like) => {
+      if (like === index) {
+        return {
+          ...item,
+          likes: item.likes + (item.Liked ? -1 : 1),
+          Liked: !item.Liked,
+        };
+      }
+      return item;
+    });
+
+    setAuthorInfo((prevAuthor) => ({
+      ...prevAuthor,
+      nftCollection: updatedNftCollection,
+    }));
+  }
+
   return (
     <div className="de_tab_content">
       <div className="tab-1">
         <div className="row">
-          {authorInfo.nftCollection.map((author, index) => (
+          {authorInfo.nftCollection.map((authors, index) => (
             <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={index}>
               <div className="nft__item">
                 <div className="author_list_pp">
-                  <Link to={`/item-details/${author.nftId}`}>
+                  <Link to={`/item-details/${authors.nftId}`}>
                     <img className="lazy" src={authorInfo.authorImage} alt="" />
                     <i className="fa fa-check"></i>
                   </Link>
@@ -37,7 +53,7 @@ const AuthorItems = ({authorInfo, setAuthorInfo}) => {
                   </div>
                   <Link to="/item-details">
                     <img
-                      src={author.nftImage}
+                      src={authors.nftImage}
                       className="lazy nft__item_preview"
                       alt=""
                     />
@@ -45,12 +61,16 @@ const AuthorItems = ({authorInfo, setAuthorInfo}) => {
                 </div>
                 <div className="nft__item_info">
                   <Link to="/item-details">
-                    <h4>{author.title}</h4>
+                    <h4>{authors.title}</h4>
                   </Link>
-                  <div className="nft__item_price">{author.price} ETH</div>
-                  <div className="nft__item_like">
+                  <div className="nft__item_price">{authors.price} ETH</div>
+                  <div
+                    className="nft__item_like"
+                    onClick={() => likeToggle(index)}
+                    style={{ color: authors.Liked ? "red" : "inherit" }}
+                  >
                     <i className="fa fa-heart"></i>
-                    <span>{author.likes}</span>
+                    <span>{authors.likes}</span>
                   </div>
                 </div>
               </div>
