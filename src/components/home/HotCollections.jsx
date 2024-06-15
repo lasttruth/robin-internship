@@ -31,11 +31,15 @@ const HotCollections = () => {
     },
   };
   async function fetchCollection() {
-    const { data } = await axios.get(
-      "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections"
-    );
-    setCollections(data);
-    setLoading(false);
+    try {
+      const { data } = await axios.get(
+        "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections"
+      );
+      setCollections(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error while trying to get ", error);
+    }
   }
 
   useEffect(() => {
@@ -84,7 +88,7 @@ const HotCollections = () => {
                         </Link>
                       </div>
                       <div className="nft_coll_pp">
-                        <Link to={`/${collection.nftId}`}>
+                        <Link to={`/${collection.authorId}`}>
                           <img
                             className="lazy pp-coll"
                             src={collection.authorImage}
