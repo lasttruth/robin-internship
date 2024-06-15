@@ -8,7 +8,7 @@ import Skeleton from "../UI/Skeleton";
 
 const HotCollections = () => {
   const [collections, setCollections] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const settings = {
     loop: true,
@@ -36,10 +36,10 @@ const HotCollections = () => {
         "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections"
       );
       setCollections(data);
-      setLoading(false);
+      setLoading(true);
     } catch (error) {
       console.error("Error while trying to get ", error);
-      setLoading(false)
+      setLoading(true)
     }
   }
 

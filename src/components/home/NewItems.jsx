@@ -8,17 +8,17 @@ import Skeleton from "../UI/Skeleton";
 
 const NewItems = () => {
   const [newItems, setNewItems] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
   async function fetchNewItems() {
     try {
       const { data } = await axios.get(
         "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"
       );
       setNewItems(data);
-      setIsLoaded(true);
+      setIsLoaded(false);
     } catch (error) {
       console.error("Error fetching new items:", error);
-      setIsLoaded(true);
+      setIsLoaded(false);
     }
   }
 
