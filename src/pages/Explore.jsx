@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SubHeader from "../images/subheader.jpg";
 import ExploreItems from "../components/explore/ExploreItems";
+import axios from "axios";
 
 const Explore = () => {
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -11,7 +13,7 @@ const Explore = () => {
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
         <div id="top"></div>
-        
+
         <section
           id="subheader"
           className="text-light"
@@ -32,7 +34,9 @@ const Explore = () => {
         <section aria-label="section">
           <div className="container">
             <div className="row">
-              <ExploreItems />
+              
+                <ExploreItems/>
+              
             </div>
           </div>
         </section>
