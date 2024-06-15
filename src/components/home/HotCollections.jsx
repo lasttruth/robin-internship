@@ -39,6 +39,7 @@ const HotCollections = () => {
       setLoading(false);
     } catch (error) {
       console.error("Error while trying to get ", error);
+      setLoading(false)
     }
   }
 
