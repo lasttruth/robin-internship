@@ -4,7 +4,8 @@ import Timer from "./Timer";
 
 function ItemCard({ item }) {
   return (
-    <div className="nft__item">
+    <div className="nft__item" data-aos="fade-up"
+    data-aos-delay="500">
       <div className="author_list_pp">
         <Link
           to={`/author/${item.authorId}`}

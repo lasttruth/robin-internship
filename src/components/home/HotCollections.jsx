@@ -39,7 +39,7 @@ const HotCollections = () => {
       setLoading(true);
     } catch (error) {
       console.error("Error while trying to get ", error);
-      setLoading(true)
+      setLoading(true);
     }
   }
 
@@ -77,7 +77,12 @@ const HotCollections = () => {
                   </div>
                 ))
               : collections.map((collection) => (
-                  <div className="item" key={collection.id}>
+                  <div
+                    className="item"
+                    key={collection.id}
+                    data-aos="fade-left"
+                    data-aos-delay="300"
+                  >
                     <div className="nft_coll">
                       <div className="nft_wrap">
                         <Link to={`item-details/${collection.nftId}`}>
