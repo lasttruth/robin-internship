@@ -8,7 +8,7 @@ import Skeleton from "../UI/Skeleton";
 
 const HotCollections = () => {
   const [collections, setCollections] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const settings = {
     loop: true,
@@ -31,11 +31,16 @@ const HotCollections = () => {
     },
   };
   async function fetchCollection() {
-    const { data } = await axios.get(
-      "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections"
-    );
-    setCollections(data);
-    setLoading(false);
+    try {
+      const { data } = await axios.get(
+        "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections"
+      );
+      setCollections(data);
+      setLoading(true);
+    } catch (error) {
+      console.error("Error while trying to get ", error);
+      setLoading(true)
+    }
   }
 
   useEffect(() => {
@@ -75,7 +80,7 @@ const HotCollections = () => {
                   <div className="item" key={collection.id}>
                     <div className="nft_coll">
                       <div className="nft_wrap">
-                        <Link to={`/${collection.nftId}`}>
+                        <Link to={`item-details/${collection.nftId}`}>
                           <img
                             src={collection.nftImage}
                             className="lazy img-fluid"
@@ -84,7 +89,7 @@ const HotCollections = () => {
                         </Link>
                       </div>
                       <div className="nft_coll_pp">
-                        <Link to={`/${collection.nftId}`}>
+                        <Link to={`author/${collection.authorId}`}>
                           <img
                             className="lazy pp-coll"
                             src={collection.authorImage}
@@ -94,7 +99,7 @@ const HotCollections = () => {
                         <i className="fa fa-check"></i>
                       </div>
                       <div className="nft_coll_info">
-                        <Link to="/explore">
+                        <Link to={`item-details/${collection.nftId}`}>
                           <h4>{collection.title}</h4>
                         </Link>
                         <span>ERC-{collection.code}</span>
