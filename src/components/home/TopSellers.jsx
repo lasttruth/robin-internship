@@ -40,7 +40,9 @@ const TopSellers = () => {
               {isLoaded
                 ? sellers.map((seller) => (
                     <li key={seller.id}>
-                      <div className="author_list_pp">
+                      <div className="author_list_pp"
+                      data-aos="fade-left"
+                      data-aos-delay="900">
                         <Link to={`author/${seller.authorId}`}>
                           <img
                             className="lazy pp-author"
